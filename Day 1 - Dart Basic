@@ -1,0 +1,79 @@
+void main() {
+  print('Hello Nadim!');
+  int x=100000000000;
+  
+  var s="2.5";
+  print(x);
+  print(s.runtimeType);
+  
+  
+  dynamic a=10;
+    print(a.runtimeType);
+   a=10.6;
+       print(a.runtimeType);
+   a="nadim";
+       print(a.runtimeType);
+       
+       Function ad=Add;
+       
+       String s1="Nadim";
+       String s2="Mahmud";
+       
+       print("$s1 bro");  // string interpolation
+       print("$s2 is ${s2.length} character long");
+       
+       
+       List<int>mrk=[];
+       mrk.add(30);
+       mrk.add(40);
+       mrk.add(20);
+       mrk.insert(0,10);
+       
+       
+       print(mrk);
+       
+       
+       final personList=[
+           {
+               'name':'nadim',
+               'age':21,
+           },{
+               'name':'rahi',
+               'age' :12,
+           },
+           
+           ];
+           
+           
+        for(var m in personList){
+            print('${m['name']}');
+        }
+        
+        
+        
+        int? ck;
+        ck=null;
+        
+        print(ck.runtimeType);
+        print(ck?.isEven);
+        print(ck?.isEven ?? 'undefined');
+        int k=9;
+        print(k.isEven ? 'even' : 'odd');
+        
+        
+       //  ? --> check it it null
+       //  ! --> conferm that its not null
+       
+       
+       
+       int sum=mul(23,2);
+       print(sum);
+        int sum2=multi(y:23,x:7);
+       print(sum2);
+}
+void Add(){
+    
+}
+mul([int x=0,int y=0]) =>x*y; //positional_optional_paramiter
+
+multi({int x=0,int y=0}) =>x*y;//named_positional_paramiter
