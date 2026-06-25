@@ -1,0 +1,146 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+
+
+void main(){
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+    primarySwatch: Colors.blueGrey,
+
+    ),
+     home: const homePage(),
+  )
+  );
+}
+
+class homePage extends StatefulWidget {
+  const homePage({
+    super.key,
+  });
+
+  @override
+  State<homePage> createState() => _homePageState();
+}
+
+class _homePageState extends State<homePage> {
+  final random =Random.secure();
+  final diceList=[
+    'images/d1.png',
+    'images/d2.png',
+    'images/d3.png',
+    'images/d4.png',
+    'images/d5.png',
+    'images/d6.png',
+  ];
+  int idx1=0;
+  int idx2=0;
+  int diceSum=0;
+  String state='';
+  bool btn=true;
+  bool flg=true;
+  int trg=100;
+  bool rst=true;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.deepOrange,
+        title: Text('Dice Game'),
+      ),
+
+      body: Center(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment:MainAxisAlignment.center,
+              children: [
+                Image.asset(diceList[idx1],width: 100,height: 100,),
+                const SizedBox(width: 10,),
+                Image.asset(diceList[idx2],width: 100,height: 100,),
+              ],
+            ),
+            Text(state,style: TextStyle(fontSize: 24),),
+           if(btn==true) Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: RollDice,
+                  child: const Text('Roll the Dice')),
+            ),
+
+            if(rst==false) Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: ReSetDice,
+                  child: const Text('Reset the Dice')),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void RollDice() {
+    setState(() {
+      idx1=random.nextInt(6);
+      idx2=random.nextInt(6);
+      diceSum=idx1+idx2+2;
+      checkStatus();
+    });
+  }
+
+  void checkStatus() {
+    if(flg==true){
+      if( (diceSum==11 || diceSum==7)){
+        state='You Win!';
+        btn=false;
+        rst=false;
+      }
+      else if( (diceSum==2 || diceSum==3 || diceSum==12)){
+        state='You lost!';
+        btn=false;
+        rst=false;
+      }
+      else{
+        trg=diceSum;
+        state='Your Target is ${trg}';
+        flg=false;
+      }
+    }
+    else{
+      if(diceSum==trg){
+        state='You Win!';
+        btn=false;
+        rst=false;
+      }
+      else if(diceSum==7){
+        state='You Lost';
+        btn=false;
+        rst=false;
+      }
+    }
+
+  }
+
+  void ReSetDice() {
+    setState(() {
+       idx1=0;
+       idx2=0;
+       diceSum=0;
+       state='';
+       btn=true;
+       flg=true;
+       trg=100;
+       rst=true;
+    });
+  }
+}
